@@ -16,6 +16,7 @@ class CreateExportsTable extends Migration
         Schema::create('exports', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->references('id')->on('users')->onDelete('set null');
+            $table->string('file')->nullable();
             $table->timestamps();
         });
     }

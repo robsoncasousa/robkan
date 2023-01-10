@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Export;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Spatie\DbDumper\Databases\MySql;
@@ -28,6 +29,10 @@ class ExportController extends Controller
             ->dumpToFile($filename);
 
         rename($filename, storage_path('app/public/dumps/' . $filename));
+
+        Export::create([
+            'file' => 'app/public/dumps/' . $filename
+        ]);
 
         return redirect()->route('export.download', $filename);
     }

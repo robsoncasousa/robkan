@@ -7,3 +7,5 @@ use Illuminate\Support\Facades\Route;
 Route::resource('cards', CardsController::class)->only(['store', 'index', 'update']);
 Route::resource('columns', ColumnsController::class)->only('store', 'update', 'destroy', 'index');
 Route::post('columns/update-order', [ColumnsController::class, 'updateOrder'])->name('update_order');
+
+Route::get('list-cards', [CardsController::class, 'listCards'])->name('list_cards');

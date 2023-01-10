@@ -3,8 +3,8 @@
 Run this commands:
 
 - <b><i>composer update</i></b>
-- <b><i>npm install</i></b>
 - <b><i>php artisan migrate</i></b>
+- <b><i>php artisan db:seed</i></b>
 
 ## Run application
 

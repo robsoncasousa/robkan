@@ -4,8 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Card;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Validator;
+
+use function PHPUnit\Framework\isNull;
 
 class CardsController extends Controller
 {
@@ -17,6 +21,45 @@ class CardsController extends Controller
     public function index()
     {
         return Card::all();
+    }
+
+    public function listCards(Request $request)
+    {
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'access_token' => ['required', 'exists:users,access_token'],
+                'date' => ['nullable', 'date'],
+                'status' => ['nullable', 'numeric'],
+            ]
+        );
+
+        if ($validator->fails()) {
+            return [
+                'status' => false,
+                'errors' => $validator->messages()
+            ];
+        }
+
+
+        $date = $request->get('date');
+        $status = $request->get('status');
+
+        $query = Card::query()
+            ->when($date, function ($query, $date) {
+                $query->where('created_at', 'like', "$date%");
+            });
+
+        switch ($status) {
+            case null:
+                $query->withTrashed();
+                break;
+            case "0":
+                $query->onlyTrashed();
+                break;
+        }
+
+        return $query->get();
     }
 
     /**
@@ -89,14 +132,4 @@ class CardsController extends Controller
         ];
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }
