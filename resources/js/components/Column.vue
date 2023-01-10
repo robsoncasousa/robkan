@@ -67,6 +67,9 @@ export default {
         },
         openNewCardForm(column) {
             this.$emit('openNewCardForm', column)
+            this.$nextTick(() => {
+                this.$refs[column.id +'_card_input_text'].focus()
+            })
         },
         loadColumns(column) {
             this.$emit('loadColumns', column)

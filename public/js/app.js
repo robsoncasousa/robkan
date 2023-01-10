@@ -2080,13 +2080,18 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit('closeCardForm', column);
     },
     openNewCardForm: function openNewCardForm(column) {
+      var _this = this;
+
       this.$emit('openNewCardForm', column);
+      this.$nextTick(function () {
+        _this.$refs[column.id + '_card_input_text'].focus();
+      });
     },
     loadColumns: function loadColumns(column) {
       this.$emit('loadColumns', column);
     },
     saveNewCard: function saveNewCard(column) {
-      var _this = this;
+      var _this2 = this;
 
       var card = {
         title: this.newCard.title,
@@ -2098,15 +2103,15 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (res) {
         if (res.data.status) {
-          _this.loadColumns();
+          _this2.loadColumns();
 
-          _this.newCard.title = '';
+          _this2.newCard.title = '';
 
-          _this.$nextTick(function () {
-            _this.$refs[column.id + '_card_input_text'].focus();
+          _this2.$nextTick(function () {
+            _this2.$refs[column.id + '_card_input_text'].focus();
           });
         } else {
-          _this.error = true;
+          _this2.error = true;
         }
       });
     }
