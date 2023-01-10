@@ -25,7 +25,7 @@ class ExportController extends Controller
             ->setPassword(env('DB_PASSWORD'))
             ->setHost(env('DB_HOST'))
             ->setPort(env('DB_PORT'))
-            ->dumpToFile(public_path('dump.sql'));
+            ->dumpToFile($filename);
 
         rename($filename, 'storage/app/public/dumps/' . $filename );
 
