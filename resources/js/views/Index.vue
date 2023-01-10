@@ -1,6 +1,6 @@
 <template>
     <div class="board">
-        <card-modal />
+        <card-modal :card="clickedCard" @before-close="clickedCard = {}"/>
 
         <div class="card_listing">
             <draggable class="flex" v-model="columns" group="columns" @start="drag=true" @end="updateColumnsOrder">
@@ -14,6 +14,7 @@
                         @closeCardForm="closeCardForm"
                         @deleteColumn="deleteColumn"
                         @loadColumns="loadColumns"
+                        @openCardModal="openCardModal"
                 />
             </draggable>
 
@@ -28,6 +29,7 @@
                 <a v-if="! newColumn.formOpened" href="#" class="card_listing__add_button" @click.prevent="addColumn">+ Add Another Column</a>
             </div>
         </div>
+        <export-d-b></export-d-b>
     </div>
 </template>
 
@@ -36,10 +38,11 @@
     import axios from "axios";
     import Column from '../components/Column'
     import CardModal from "../components/CardModal"
+    import ExportDB from "../components/ExportDB";
 
     export default {
         name: "Index",
-        components: {draggable, Column, CardModal},
+        components: {draggable, Column, CardModal, ExportDB},
         data() {
             return {
                 columns: [],
@@ -51,6 +54,7 @@
                     title: '',
                     formOpened: false,
                 },
+                clickedCard: {}
             }
         },
         methods: {
@@ -154,7 +158,11 @@
 
                 //save order
                 axios.post('/api/columns/update-order', {columns, cards})
-            }
+            },
+            openCardModal(card) {
+                this.clickedCard = card
+                this.$modal.show('card-edit')
+            },
         },
         mounted() {
             this.loadColumns()

@@ -11,6 +11,7 @@
                 :key="index"
                 class="card"
                 :card="card"
+                v-on="$listeners"
             />
         </draggable>
 

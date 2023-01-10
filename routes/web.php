@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\ExportController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,14 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('/', function () {
-//    return view('index');
-//});
+Route::get('/export', [ExportController::class, 'dump'])->name('export_sql');
+Route::get('/export-download/{file}', function ($file) {
+    return Storage::download("public/dumps/" . $file);
+})->name('export.download');
 
 Route::get('/{any}', function () {
     return view('index');
 })->where('any', '.*');
-
-//Auth::routes();
-
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

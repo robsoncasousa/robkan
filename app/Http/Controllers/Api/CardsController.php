@@ -55,36 +55,6 @@ class CardsController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $post = Card::find($id);
-        if (!$post) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Card not found'
-            ])->setStatusCode(404);
-        }
-
-        return $post;
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -93,7 +63,30 @@ class CardsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'title' => ['required', 'string'],
+                'description' => ['nullable', 'string']
+            ]
+        );
+
+        if ($validator->fails()) {
+            return [
+                'status' => false,
+                'errors' => $validator->messages()
+            ];
+        }
+
+        $card = Card::findOrFail($id);
+        $card->update([
+            'title' => $request->title,
+            'description' => $request->description,
+        ]);
+
+        return [
+            'status' => true,
+        ];
     }
 
     /**

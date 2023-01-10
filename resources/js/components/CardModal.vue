@@ -1,17 +1,16 @@
 <template>
     <modal name="card-edit" transition="pop-out" :width="modalWidth" :focus-trap="true" :height="370" style="top: 30px">
         <div class="card_modal">
-            <div class="card_modal__title">Edit Card {{ title }}</div>
+            <div class="card_modal__title">Edit Card</div>
             <div>
                 <form autocomplete="false" class="form">
-                    <input class="form__title" type="text" placeholder="Type a title">
-                    <textarea class="form__description" type="text" placeholder="Type a description to this card">
-                    </textarea>
+                    <input v-model="form.title" class="form__title" type="text" placeholder="Type a title">
+                    <textarea v-model="form.description" class="form__description" type="text" placeholder="Type a description to this card"></textarea>
                 </form>
 
                 <div class="card_modal__buttons">
-                    <button class="card_modal__cancel" @click="$modal.close()">Cancel</button>
-                    <button class="card_modal__save" @click="signIn">Save</button>
+                    <button class="card_modal__cancel" @click="$modal.hide('card-edit')">Cancel</button>
+                    <button class="card_modal__save" @click="save">Save</button>
                 </div>
             </div>
         </div>
@@ -19,16 +18,18 @@
 </template>
 
 <script>
+import axios from "axios";
+
 const MODAL_WIDTH = 656
 export default {
     name: "CardModal",
     props: {
         card: {},
-        title: ''
     },
     data() {
         return {
-            modalWidth: MODAL_WIDTH
+            modalWidth: MODAL_WIDTH,
+            form: {},
         }
     },
     created() {
@@ -36,13 +37,23 @@ export default {
             window.innerWidth < MODAL_WIDTH ? MODAL_WIDTH / 2 : MODAL_WIDTH
     },
     methods: {
-        signIn() {
-            alert('Sign in')
+        save() {
+            axios.put(
+                '/api/cards/' + this.card.id,
+                {title: this.form.title, description: this.form.description}
+            ).then(res => {
+                this.$modal.hide('card-edit')
+            })
         },
-        register() {
-            alert('Register')
-        }
-    }
+    },
+    watch: {
+        card: {
+            immediate: true,
+            handler (newVal, oldVal) {
+                this.form = newVal;
+            }
+        },
+    },
 }
 </script>
 
@@ -104,6 +115,7 @@ export default {
         padding: 10px 10px;
         border-radius: 4px;
         height: 100px;
+        resize: none;
     }
 }
 hr {

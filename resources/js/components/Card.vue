@@ -1,5 +1,5 @@
 <template>
-    <div @click="$modal.show('card-edit', {title: 'asdasd'})">
+    <div @click="openModal">
         {{ card.title }}
     </div>
 </template>
@@ -10,7 +10,11 @@ export default {
     props: {
         card: {}
     },
+    emits: ['openCardModal'],
     methods: {
+        openModal() {
+            this.$emit('openCardModal', this.card)
+        }
     }
 }
 </script>
