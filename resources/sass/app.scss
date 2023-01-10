@@ -1,0 +1,188 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    background-color: #e0e1e0;
+    font-family: Nunito;
+    font-size: 14px;
+}
+
+.header {
+    background-color: #222;
+    padding: 10px 20px;
+
+    &__title {
+        font-size: 25px;
+        color: #fff;
+        display: inline-block;
+        margin-right: 15px;
+    }
+    &__subtitle {
+        font-size: 15px;
+        text-transform: uppercase;
+        font-weight: 500;
+        color: #aaa;
+        display: inline-block;
+        vertical-align: text-bottom;
+    }
+}
+
+#app {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    height: 100%;
+}
+
+.board {
+    margin-top: 10px;
+    padding: 20px;
+    height: 94vh;
+    overflow-y: hidden;
+    overflow-x: auto;
+}
+
+.card_listing {
+    display: flex;
+    flex-direction: row;
+
+    &__add_button {
+        color: #fff;
+        padding: 7px 25px;
+        background-color: #6a7078;
+        text-decoration: none;
+        border-radius: 4px;
+        align-self: flex-start;
+        display: flex;
+        margin-right: 10px;
+
+        &:hover {
+            opacity: 0.85;
+        }
+    }
+
+    &__box_flex_buton {
+        min-width: 300px;
+    }
+}
+
+.column {
+    margin-right: 20px;
+    width: 300px;
+    background-color: #22404e;
+    padding: 10px;
+    border-radius: 4px;
+
+    &__title {
+        text-align: center;
+        margin: 0px 0 10px;
+        color: #fff;
+        font-size: 18px;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+    &__add_card_button {
+        padding: 10px 5px;
+        width: 100%;
+        border-radius: 4px;
+        margin-top: 20px;
+        background-color: #2a4b5a;
+        color: #fff;
+
+        &:hover {
+            background-color: #446d81;
+            cursor: pointer;
+        }
+    }
+    &__title_flexbox {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+    &__delete {
+        color: #fff;
+        text-decoration: none;
+        font-size: 18px;
+        margin-right: 5px;
+    }
+}
+
+.card {
+    background-color: #fff;
+    color: #222;
+    padding: 5px;
+    border-radius: 4px;
+    margin-top: 10px;
+
+    &:hover {
+        opacity: 0.9;
+        cursor: pointer;
+    }
+}
+
+.form {
+    &__buttons {
+        display: flex;
+    }
+    &__input {
+        resize: none;
+        padding: 5px;
+        width: 100%;
+        border-radius: 4px;
+        margin: 20px 0 5px;
+        font-family: inherit;
+        color: #222;
+        height: 50px;
+    }
+    &__save {
+        color: #fff;
+        padding: 10px 0;
+        background-color: #108bf5;
+        text-decoration: none;
+        border-radius: 4px;
+        width: 50%;
+        text-align: center;
+        font-weight: 600;
+    }
+    &__close {
+        color: #ddd;
+        text-decoration: none;
+        font-family: arial;
+        font-size: 24px;
+        font-weight: 500;
+        margin-left: 10px;
+        line-height: 35px;
+
+        &--dark {
+            color: #333;
+        }
+    }
+}
+
+.form_column {
+    background-color: #ccc;
+    padding: 0 10px;
+    border-radius: 4px;
+    height: 135px;
+    min-width: 300px;
+}
+
+.flex {
+    display: flex;
+}
